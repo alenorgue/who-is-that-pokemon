@@ -1,7 +1,7 @@
 //for implementation details visit marinsborg.com
 var apiUrl = "https://pokeapi.co/api/v2/pokemon/?"; //API base URL
 var offset = 0;
-var limit = 10; //limiting Pokemons - sprites are not numbered properly after 665
+var limit = 150; //limiting Pokemons - sprites are not numbered properly after 665 NEED TO BE SET AT 150(PRIMERA GENERACION)
 var pokemonUrl = apiUrl + "limit=" + limit + "&offset=" + offset; //complete URL with limit
 var spriteUrl =
   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"; //base URL from which sprites are fetched
@@ -9,6 +9,7 @@ const spriteElement = document.getElementById("sprite"); //element object from H
 const guess = document.getElementById("guess"); //element object from HTML with an id 'guess'
 const streakElement = document.getElementById("streak"); //element object from HTML with an id 'streak'
 const pokemonNameElement = document.getElementById("pokemon-name"); //element object from HTML with an id 'pokemon-name'
+const checkButton = document.getElementById('checkbtn');
 var streak = 0; //initialize streak to zero
 var pokemonName = ""; //set pokemon name as global variable
 var pokemonData; //variable which holds the response from Pokemon API
@@ -19,6 +20,10 @@ guess.addEventListener("keypress", function (e) {
     checkGuess();
   }
 });
+checkButton.addEventListener('click', function (e){
+  checkGuess();
+}); //ADDED BUTTON EVENTLISTENER
+
 
 // Execute this function to play the audio
 function playPokemonMp3() {
@@ -40,7 +45,7 @@ var main = async function () {
 
 //function that compares player's guess with Pokemon name and based on that either increases or resets streak
 function checkGuess() {
-  if (pokemonName.toLowerCase() === guess.value) {
+  if (pokemonName.toLowerCase() === guess.value.toLowerCase()) {
     streak++; //correct guess - increase streak by one
   } else {
     streak = 0; //wrong guess - reset streak
@@ -75,3 +80,7 @@ function getRandomIntInclusive(min, max) {
 }
 //function call that starts application
 main();
+
+//event listener para el audio
+
+guess.addEventListener('click', playPokemonMp3);
